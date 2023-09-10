@@ -1,0 +1,22 @@
+//solution of leetcode problem swap nodes in pair based on linked list topic of dsa
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head==NULL){
+            return NULL;
+        }
+        if(head->next==NULL){
+            return head;
+        }
+        ListNode* prev=head;
+        ListNode* curr=prev->next;
+        while(curr!=NULL){
+            swap(prev->val,curr->val);
+            if(curr->next!=NULL){
+            prev=curr->next;
+            curr=curr->next->next;}
+           else break;
+        }
+        return head;
+    }
+};
