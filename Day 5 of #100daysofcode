@@ -1,0 +1,111 @@
+problem of leetcode named as minstack based on topic stack of DSA->
+
+
+class MinStack {
+public:
+stack<int> st,minimum;
+    MinStack() {
+        
+    }
+    
+    void push(int val) {
+        if(minimum.empty()){
+            minimum.push(val);
+        }
+        else{
+            minimum.push(min(val,minimum.top()));
+        }
+        st.push(val);
+    }
+    
+    void pop() {
+        st.pop();
+        minimum.pop();
+        
+    }
+    
+    int top() {
+     
+            return st.top();
+    
+    }
+    
+    int getMin() {
+        return minimum.top();
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+Problem 2 //Evaluate reverse polish notation based on topic stack leetcode problem based on topic stack of dsa->
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int>st;int ans;
+        for(int i=0;i<tokens.size();i++){
+            string  ch=tokens[i];
+            if(ch=="*"||ch=="/"||ch=="+"||ch=="-"){
+                int b=st.top();
+                st.pop();
+                int a=st.top();
+                st.pop();
+          if(ch=="*"){
+    ans=a*b;
+}
+        else if(ch=="+"){
+    ans=a+b;
+}
+else if(ch=="-"){
+    ans=a-b;
+}
+ else if(ch=="/"){
+    ans=a/b;
+}
+st.push(ans);
+            }
+            else {
+                st.push(stoi(ch));
+            }
+        }
+      return st.top();
+
+    }
+};
+Problem 3 of leetcode based on topic stack of dsa which is remove duplicate letters->
+class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+int n = s.size();
+unordered_map<char, int> freq;
+unordered_map<char, bool> visited;
+stack<int> st;
+string res = "";
+
+for(char ch:s)	freq[ch]++;
+
+for(int i = 0; i < n; i++){
+    freq[s[i]]--;
+    if(visited[s[i]])	continue;
+
+    while(!st.empty() &&  s[i] < s[st.top()] && freq[s[st.top()]] > 0){
+        visited[s[st.top()]] = false;
+        st.pop();
+    }
+    st.push(i);
+    visited[s[i]] = true;
+}
+
+while(!st.empty()){
+    res = s[st.top()] + res;
+    st.pop();
+}
+
+return res;
+}
+};
