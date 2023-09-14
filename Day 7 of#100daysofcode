@@ -1,0 +1,61 @@
+solved various binary tree problem from gfg and leetcode
+problem 1->symmetric tree
+class Solution {
+public:
+bool traverse(TreeNode* leftroot,TreeNode* rightroot){
+if(leftroot==NULL && rightroot==NULL){
+    return true;
+}
+if(leftroot!=NULL and rightroot==NULL){
+    return false;
+}
+if(leftroot==NULL and rightroot!=NULL){
+    return false;
+}
+if(leftroot->val==rightroot->val){
+    bool x=traverse(leftroot->left,rightroot->right);
+    bool y=traverse(leftroot->right,rightroot->left);
+    return x & y;
+}
+return false;
+}  
+  bool isSymmetric(TreeNode* root) {
+      if(root==NULL){
+          return true;
+      }
+     return  traverse(root->left,root->right);
+    }
+};
+Problem no 2->same tree
+class Solution {
+public:
+bool Inorder(TreeNode* p,TreeNode* q){
+    if(p==NULL && q==NULL){
+        return true;
+    }
+    if(p==NULL && q!=NULL){
+        return false;
+    }
+    if(p!=NULL && q==NULL){
+        return false;
+    }
+if(p->val==q->val){
+    bool left=Inorder(p->left,q->left);
+    bool right=Inorder(p->right,q->right);
+    return left & right;
+}
+return false;
+}
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+       return Inorder(p,q); 
+    }
+};
+problem no 3->zigzag tree
+problem no 4-> boundry traversal 
+problem no 5-> vertical order traversal
+Problem no 6->top view
+problem no 7 ->bottom view
+problem no 8 -> right view
+problem no 9 ->left view
+problem no 10->level order traversal in spiral form
+Problem no 10->mirror problem 
