@@ -1,0 +1,22 @@
+Leetcode problem 1-> validate binary tree
+class Solution {
+public:
+bool solve(TreeNode* root,long minimum,long maximum){
+if(root==NULL){
+    return true;
+}
+if(root->val < maximum && root->val > minimum){
+   bool left= solve(root->left,minimum,root->val);
+   bool right= solve(root->right,root->val,maximum);
+   return left & right;
+}
+else{
+    return false;
+}
+}
+
+    bool isValidBST(TreeNode* root) {
+        return solve(root,LONG_MIN,LONG_MAX);
+    }
+};
+Task 2-> Queue its types and  implementation revised  
