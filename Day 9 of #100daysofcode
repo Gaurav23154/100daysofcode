@@ -1,0 +1,110 @@
+problem no 1 -> topic queue
+queue reversal
+problem no 2-> topic queue
+first negative integer in window of size k
+vector<long long> printFirstNegativeInteger(long long int A[],
+                                                        long long int N, long long int K) {
+                                                 
+    vector<long long> ans;
+    deque<long long int> dq;
+    for(int i=0;i<K;i++){
+        if(A[i]<0){
+            dq.push_back(i);
+        }
+    }
+     if(dq.size()>0){
+                   ans.push_back(A[dq.front()]);
+                   }
+               else{
+                ans.push_back(0);
+                    }
+   
+                                                 
+          for(int i=K ;i<N;i++){
+              if(A[i]<0){
+                  dq.push_back(i);
+              }
+              if(!dq.empty() && i-dq.front()>=K){
+                  dq.pop_front();
+              }
+            
+               if(dq.size()>0){
+                   ans.push_back(A[dq.front()]);
+                   }
+               else{
+                ans.push_back(0);
+                    }
+          }  
+          return ans;
+                                                 
+ }
+problem no 3->
+Reverse first k element of queue
+queue<int> modifyQueue(queue<int> q, int k) {
+stack<int> st;
+for(int i=0;i<k;i++){
+    int temp=q.front();
+    q.pop();
+st.push(temp);
+}
+while(!st.empty()){
+    int temp=st.top();
+    st.pop();
+    q.push(temp);
+}
+int t=q.size()-k;
+while(t--){
+    int temp=q.front();
+    q.pop();
+    q.push(temp);
+}
+return q;
+}
+Problem no 4->
+first non repeating member of a stream
+queue<int> modifyQueue(queue<int> q, int k) {
+stack<int> st;
+for(int i=0;i<k;i++){
+    int temp=q.front();
+    q.pop();
+st.push(temp);
+}
+while(!st.empty()){
+    int temp=st.top();
+    st.pop();
+    q.push(temp);
+}
+int t=q.size()-k;
+while(t--){
+    int temp=q.front();
+    q.pop();
+    q.push(temp);
+}
+return q;
+}
+problem no 5->
+circular tour
+class Solution{
+  public:
+  
+    //Function to find starting point where the truck can start to get through
+    //the complete circle without exhausting its petrol in between.
+    int tour(petrolPump p[],int n)
+    {
+       int deficit=0;
+       int balance=0;
+       int start=0;
+       for(int i=0;i<n;i++){
+           balance+=p[i].petrol-p[i].distance;
+           if(balance<0){
+               start=i+1;
+               deficit+=balance;
+               balance=0;
+           }
+       }
+       if(deficit+balance>=0){
+           return start;
+       }
+       else return -1;
+    }
+};
