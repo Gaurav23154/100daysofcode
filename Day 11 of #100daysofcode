@@ -1,0 +1,118 @@
+solved 3 new problems on binary tree
+ problem no 1 sum of longest bloodline
+class Solution
+{
+public:
+int solve(Node * root ,int sum ,int & maxsum,int len,int & maxlen){
+    if(root==NULL){
+        if(len>maxlen){
+    maxlen=len;
+    maxsum=sum;
+        }
+        else if(len==maxlen){
+           maxsum=max(sum,maxsum);
+        }
+        return maxsum;
+    }
+    sum+=root->data;
+       solve(root->left,sum,maxsum,len+1,maxlen);
+       solve(root->right,sum,maxsum,len+1,maxlen);
+    
+}
+    
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        int sum=0;
+        int maxsum=0;
+        int len=0;
+        int maxlen=0;
+        solve(root,sum,maxsum,len,maxlen);
+       return maxsum;
+    }
+};
+problem no 2 LCA of a binary tree
+class Solution
+{
+public:
+int solve(Node * root ,int sum ,int & maxsum,int len,int & maxlen){
+    if(root==NULL){
+        if(len>maxlen){
+    maxlen=len;
+    maxsum=sum;
+        }
+        else if(len==maxlen){
+           maxsum=max(sum,maxsum);
+        }
+        return maxsum;
+    }
+    sum+=root->data;
+       solve(root->left,sum,maxsum,len+1,maxlen);
+       solve(root->right,sum,maxsum,len+1,maxlen);
+    
+}
+    
+    int sumOfLongRootToLeafPath(Node *root)
+    {
+        int sum=0;
+        int maxsum=0;
+        int len=0;
+        int maxlen=0;
+        solve(root,sum,maxsum,len,maxlen);
+       return maxsum;
+    }
+};
+problem no 3 K sum path
+class Solution{
+  public:
+  void solve(Node* root,int k,vector<int>  path,int & count){
+      if(root==NULL){
+          return ;
+      }
+      path.push_back(root->data);
+      solve(root->left,k,path,count);
+      solve(root->right,k, path,count);
+      
+      int size=path.size();
+      int sum=0;
+      for(int i=size-1;i>=0;i--){
+          sum+=path[i];
+          if(sum==k){
+          count++;
+      }
+      }
+    path.pop_back();
+      
+  }
+    int sumK(Node *root,int k)
+    {
+       vector<int>path;
+       int count=0;
+       solve(root,k,path,count);
+       return count;
+    }
+};
+Problem no 4 k ancestor in a tree
+void solve(Node* root,int k ,int n,vector<int >& path){
+    if(root==NULL){
+        return ;
+    }
+    
+    path.push_back(root->data);
+    solve(root->left,k,n,path);
+    solve(root->right,k,n,path);
+    if(path.back()==n){
+        return ;
+    }
+    else
+    path.pop_back();
+}
+int kthAncestor(Node *root, int k, int node)
+{
+vector<int> path;
+ solve(root,k,node,path);
+ if(path.size()>k){
+     return path[path.size()-k-1];
+ }
+ else{
+ return -1;}
+}
