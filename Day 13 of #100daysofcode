@@ -1,0 +1,97 @@
+Today i solved harder problem of binary tree
+  problem no 1 - Tree from post order and inorder
+  int findPosition(int in[],int element,int startInIndex,int endInIndex){
+    for(int i=0;i<=endInIndex;i++){
+        if(element==in[i]){
+            return i;
+        }
+    }
+    return -1;
+}
+Node* solve(int in[],int post[],int& postIndex,int startInIndex,int endInIndex,int n){
+    if(postIndex<0|| startInIndex>endInIndex){
+        return NULL;
+    }
+    int element=post[postIndex--];
+    Node* root=new Node(element);
+    int position =findPosition(in,element,startInIndex,endInIndex);
+    root->right=solve(in,post,postIndex,position+1,endInIndex,n);
+    root->left=solve(in,post,postIndex,startInIndex,position-1,n);
+   
+    
+    return root;
+}
+Node *buildTree(int in[], int post[], int n) {
+int postIndex=n-1;
+int startInIndex=0;
+int endInIndex=n-1;
+Node* ans=solve(in,post,postIndex,startInIndex,endInIndex,n);
+return ans;
+
+}
+Problem no 2-> Tree from inorder and preorder
+  int findPosition(int in[],int element,int startInIndex,int endInIndex){
+    for(int i=0;i<=endInIndex;i++){
+        if(element==in[i]){
+            return i;
+        }
+    }
+    return -1;
+}
+Node* solve(int in[],int post[],int& postIndex,int startInIndex,int endInIndex,int n){
+    if(postIndex<0|| startInIndex>endInIndex){
+        return NULL;
+    }
+    int element=post[postIndex--];
+    Node* root=new Node(element);
+    int position =findPosition(in,element,startInIndex,endInIndex);
+    root->right=solve(in,post,postIndex,position+1,endInIndex,n);
+    root->left=solve(in,post,postIndex,startInIndex,position-1,n);
+   
+    
+    return root;
+}
+Node *buildTree(int in[], int post[], int n) {
+int postIndex=n-1;
+int startInIndex=0;
+int endInIndex=n-1;
+Node* ans=solve(in,post,postIndex,startInIndex,endInIndex,n);
+return ans;
+
+}
+Problem no 3 ->burning tree 
+  I learned its algo tomorrow i will apply it;
+Problem no 4->Simplify path
+  class Solution {
+public:
+    string simplifyPath(string path) {
+    stack<string> st;
+    string ans;
+    for(int i=0;i<path.size();i++){
+        if(path[i]=='/')continue;
+
+        string temp;
+        while(i<path.size() && path[i] !='/'){
+            temp+=path[i];
+            i++;
+        }
+        if(temp==".")continue;
+        else if(temp==".."){
+            if(!st.empty()){
+                st.pop();
+            }
+        }
+        else{
+            st.push(temp);
+        }
+    }
+    while(!st.empty()){
+        ans="/"+st.top()+ans;
+        st.pop();
+    }
+    if(ans.size()==0){
+        return "/";
+    }
+    return ans;
+    }
+};
