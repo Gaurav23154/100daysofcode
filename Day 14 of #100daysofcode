@@ -1,0 +1,74 @@
+problem no 1 ->negative integer in a given window of size k
+ vector<long long> ans;
+    // deque<long long int> dq;
+    // for(int i=0;i<K;i++){
+    //     if(A[i]<0){
+    //         dq.push_back(i);
+    //     }
+    // }
+    //  if(dq.size()>0){
+    //               ans.push_back(A[dq.front()]);
+    //               }
+    //           else{
+    //             ans.push_back(0);
+    //                 }
+   
+                                                 
+    //       for(int i=K ;i<N;i++){
+    //           if(A[i]<0){
+    //               dq.push_back(i);
+    //           }
+    //           if(!dq.empty() && i-dq.front()>=K){
+    //               dq.pop_front();
+    //           }
+            
+    //           if(dq.size()>0){
+    //               ans.push_back(A[dq.front()]);
+    //               }
+    //           else{
+    //             ans.push_back(0);
+    //                 }
+    //       }  
+    //       return ans;
+Problem no 2 ->count occurence of anagram in a string 
+class Solution{
+public:
+	int search(string pat, string txt) {
+	   int k=pat.length();
+	   int i=0;int j=0;
+	   int count=0;
+	   map<char,int> agm;
+	   for(auto &it:pat){
+	       agm[it]++;
+	   }
+	   int ans=agm.size();
+	   while(j<txt.length()){
+	       if(agm.find(txt[j])!=agm.end()){
+	           agm[txt[j]]--;
+	           if(agm[txt[j]]==0){
+	               ans--;
+	           }
+	       }
+	       
+	      if(j-i+1<k){
+	          j++;
+	      }
+	      else if(j-i+1==k){
+	         if(ans==0){
+	             count++;
+	         }
+	         if(agm.find(txt[i])!=agm.end()){
+	             agm[txt[i]]++;
+	             if(agm[txt[i]]==1){
+	                 ans++;
+	             }
+	         }
+	    i++;
+	    j++;
+	      }
+	   }
+	   return count;
+	   
+}
+
+};
