@@ -1,0 +1,70 @@
+Problem no 1 ->Find the index of first occurence in a string 
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+      
+       int i=0;
+        int j=needle.length();
+        while(i+j<=haystack.length()){
+              if( haystack.substr(i,j)==needle){
+                  return i;
+              }
+              i++;
+             
+        }
+        return -1;
+    }
+};
+Problem no 2->longest common Prefix
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+     string ans;
+     ans=strs[0];
+     for(int i=1;i<strs.size();i++){
+string temp=strs[i];
+int ans_size=ans.length();
+for(int i=0;i<ans_size && !ans.empty();){
+    if(ans[i]==temp[i]){
+        i++;
+    }
+    else{
+        ans.erase(i);
+        break;
+    }
+}
+     }
+     return ans;
+        }
+    
+};
+Problem no 3-> Reverse words in a string 
+class Solution {
+public:
+    string reverseWords(string s) {
+        string str;
+        int l=s.length();
+        stack<string> st;
+        string temp;
+        for(int i=0;i<l;i++){
+            if(s[i]==' '){
+                if(!temp.empty()){
+                st.push(temp);
+                temp.clear();}
+            }
+            else{
+            temp.push_back(s[i]);
+            }
+        }
+        if(!temp.empty()){
+            st.push(temp);
+        }
+while(!st.empty()){
+    string curr=st.top();
+    st.pop();
+str.append(curr);
+str.append(" ");
+    }
+    str.pop_back();
+    return str;}
+};
