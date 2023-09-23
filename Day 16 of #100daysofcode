@@ -1,0 +1,123 @@
+Problem no 1-> Add binary
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        char carry='0';
+        char first;
+        char second;
+        string ans;
+        int a_length=a.length()-1;
+int b_length=b.length()-1;
+if(a_length>b_length){
+        for(int i=a_length;i>=0;i--){
+            first=a[i];
+            if(b_length<0){
+                second='0';
+            }
+            else{
+                second=b[b_length];
+                b_length--;
+            }
+if((first=='0'&&second=='1'&& carry=='0')||(second=='0'&& first=='1'&& carry=='0')){
+    ans.push_back('1');
+}
+if((first=='0'&&second=='1'&& carry=='1')||(second=='0'&& first=='1'&& carry=='1')){
+    ans.push_back('0');
+}
+if((first=='0'&&second=='0'&& carry=='0')||(second=='0'&& first=='0'&& carry=='0')){
+    ans.push_back('0');
+}
+if((first=='0'&&second=='0'&& carry=='1')||(second=='0'&& first=='0'&& carry=='1')){
+    ans.push_back('1');
+    carry='0';
+}
+if((first=='1'&&second=='1'&& carry=='1')||(second=='1'&& first=='1'&& carry=='1')){
+    ans.push_back('1');
+    carry='1';
+}
+if((first=='1'&&second=='1'&& carry=='0')||(second=='1'&& first=='1'&& carry=='0')){
+    ans.push_back('0');
+    carry='1';
+}
+
+        }
+      
+}
+  else{
+         for(int i=b_length;i>=0;i--){
+            first=b[i];
+            if(a_length<0){
+                second='0';
+            }
+            else{
+                second=a[a_length];
+                a_length--;
+            }
+if((first=='0'&&second=='1'&& carry=='0')||(second=='0'&& first=='1'&& carry=='0')){
+    ans.push_back('1');
+}
+if((first=='0'&&second=='1'&& carry=='1')||(second=='0'&& first=='1'&& carry=='1')){
+    ans.push_back('0');
+}
+if((first=='0'&&second=='0'&& carry=='0')||(second=='0'&& first=='0'&& carry=='0')){
+    ans.push_back('0');
+}
+if((first=='0'&&second=='0'&& carry=='1')||(second=='0'&& first=='0'&& carry=='1')){
+    ans.push_back('1');
+    carry='0';
+}
+if((first=='1'&&second=='1'&& carry=='1')||(second=='1'&& first=='1'&& carry=='1')){
+    ans.push_back('1');
+    carry='1';
+}
+if((first=='1'&&second=='1'&& carry=='0')||(second=='1'&& first=='1'&& carry=='0')){
+    ans.push_back('0');
+    carry='1';
+}    
+        }
+      
+    }  if(carry=='1'){
+            ans.push_back('1');
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;}
+};
+Problem no 2-> Group Anagram
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+     unordered_map<string ,vector<string>> mp;
+     for(auto it:strs){
+         string word=it;
+         sort(word.begin(),word.end());
+         mp[word].push_back(it);
+     }
+       vector<vector<string> > ans;
+       for(auto it:mp){
+ans.push_back(it.second);
+       }
+       return ans;
+    }
+};
+Problem no 3-> Last word
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int count=0;
+        for(int i=s.length()-1;i>=0;i--){
+            if(s[i]==' '){
+                s.pop_back();
+            }
+            else{
+                break;
+            }
+        }
+        for(int i=s.length()-1;i>=0;i--){  
+            if(s[i]==' '){
+                break;
+            }
+          count++;
+        }
+        return count;
+    }
+};
