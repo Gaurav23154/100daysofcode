@@ -1,0 +1,127 @@
+Today i learned about binary search tree its implementation traversal and deletion and also finding maximum and minimum element in a BST
+  #include<iostream>
+using namespace std;
+#include <queue>
+class Node
+{
+private:
+    /* data */
+public:
+   int data;
+   Node* left;
+   Node* right;
+
+   Node(int d){
+    this->data=d;
+    this->left=NULL;
+    this->right=NULL;
+    
+   }
+};
+
+Node* binarysearch(Node* root,int d){
+   if(root==NULL){
+        root=new Node(d);
+        return root;
+    }
+    if(d>root->data){
+        root->right=binarysearch(root->right,d);
+    }
+     else{
+        root->left=binarysearch(root->left,d);
+    }
+}
+void takeInput(Node* & root){
+      int d;
+    cout<<"Enter Data"<<endl;
+    cin>>d;
+    
+    while(d!=-1){
+            binarysearch(root,d);
+            cin>>d;
+    }
+} 
+Node* minival(Node* root){
+    Node* temp=root;
+    while(temp->left!=NULL){
+        temp=temp->left;
+    }
+    return temp;
+ }
+Node* deletion(Node* root,int val){
+    if(root==NULL){
+        return root;
+    }
+    if(root->data==val){
+        //0 child
+if(root->left==NULL and root->right==NULL){
+    delete(root);
+    return NULL;
+}
+        //1 child 
+        //left child
+        if(root->left!=NULL and root->right==NULL){
+            Node* temp=root->left;
+            delete root;
+            return temp;
+        }
+        // right child
+        if(root->right!=NULL and root ->left ==NULL){
+            Node* temp=root->right;
+            delete root;
+            return temp;
+        }
+
+        //2 child
+        if(root->left!=NULL and root->right!=NULL){
+            int mini=minival(root->right)->data;
+            root->data=mini;
+            root->right=deletion(root->right,mini);
+            return root;
+        }
+
+    }
+    else if(root->data>val){
+      root->left=  deletion(root->left,val);
+    }
+    else{
+       root->right= deletion(root->right,val);
+    }
+}
+
+void LevelOrdertrav(Node* root){
+queue <Node*> q;
+q.push(root);
+q.push(NULL);
+while(!q.empty()){
+    Node* frontNode=q.front();
+    q.pop();
+    if(frontNode==NULL){
+        cout<<endl;
+        if(!q.empty()){
+            q.push(NULL);
+        }
+    }
+    else{
+        cout<<frontNode->data<<" ";
+        if(frontNode->right){
+            q.push(frontNode->right);
+        }
+        if(frontNode->left){
+            q.push(frontNode->left);
+        }
+    }
+}
+}
+int main()
+{
+    Node* root=NULL;
+    takeInput(root);
+    //10 20 30 50 70 90 110 -1
+    cout<<"Printing BST"<<endl;
+    LevelOrdertrav(root);
+    deletion(root,30);
+    // LevelOrdertrav(root);
+
+return 0;
+}
