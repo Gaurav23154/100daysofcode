@@ -1,0 +1,213 @@
+Problem no 1-> kth smallest element
+  #include <algorithm>
+
+class Solution{
+    public:
+    // arr : given array
+    // l : starting index of the array i.e 0
+    // r : ending index of the array i.e size-1
+    // k : find kth smallest element and return using this function
+    int kthSmallest(int arr[], int l, int r, int k) {
+        //code here 
+        priority_queue<int> p;
+        for(int i=0;i<k;i++){
+            p.push(arr[i]);
+        }
+        for(int i=k;i<=r;i++){
+        if(p.top()>arr[i]){
+            p.pop();
+            p.push(arr[i]);
+        }
+        }
+        return p.top();
+    }
+};
+Problem no 2-> kth largest element 
+  #include <algorithm>
+
+class Solution{
+    public:
+    // arr : given array
+    // l : starting index of the array i.e 0
+    // r : ending index of the array i.e size-1
+    // k : find kth smallest element and return using this function
+    int kthSmallest(int arr[], int l, int r, int k) {
+        //code here
+        priority_queue<int> p;
+        for(int i=0;i<k;i++){
+            p.push(arr[i]);
+        }
+        for(int i=k;i<=r;i++){
+        if(p.top()>arr[i]){
+            p.pop();
+            p.push(arr[i]);
+        }
+        }
+        return p.top();
+    }
+};
+problem no 3-> is binary tree heap 
+  class Solution {
+  public:
+  int countNodes(struct Node* root){
+      if(root==NULL){
+          return 0;
+      }
+      int ans=1+countNodes(root->left)+countNodes(root->right);
+      return ans;
+  }
+  bool isCBT(struct Node* root,int index,int totalcount){
+      if(root==NULL){
+          return true;
+      }
+      if(index>=totalcount){
+          return false;
+      }
+      bool left=isCBT(root->left,2*index+1,totalcount);
+      bool right=isCBT(root->right,2*index+2,totalcount);
+      return left & right;
+  }
+  bool maxheap(struct Node* root){
+      if(root->left==NULL && root->right==NULL){
+          return true;
+      }
+      if(root->right==NULL){
+          return root->data > root->left->data;
+      }
+      else{
+          bool left=maxheap(root->left);
+          bool right=maxheap(root->right);
+          return (left&&right && (root->data > root->left->data)&& (root->data >root->right->data));
+      }
+  }
+    bool isHeap(struct Node* tree) {
+       int index=0;
+       int totalCount=countNodes(tree);
+       if(isCBT(tree,index,totalCount) && maxheap(tree)){
+           return true;
+       }
+       else{
+           return false;
+       }
+    }
+};
+problem no 4-> balanced tree
+  class Solution {
+public:
+int solve(TreeNode* root){
+    if(root==NULL){
+        return 0;
+    }
+int left=solve(root->left);
+int right=solve(root->right);
+if(left==-1 || right==-1 ||abs(left-right)>1 ){
+    return -1;
+}
+   int ans=1+ max(left,right);
+   return ans;
+}
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL){
+            return true;
+        }
+      if(solve(root)==-1){
+          return false;
+      }
+      else{
+          return true;
+      }
+    }
+};
+Problem no 5-> flatten binary tree to linked list
+  class Solution {
+public:
+    void flatten(TreeNode* root) {
+        TreeNode* curr=root;
+        while(curr!=NULL){
+            if(curr->left!=NULL){
+                TreeNode* pred=curr->left;
+                while(pred->right!=NULL &&  pred->right!=curr){
+                    pred=pred->right;
+                }
+                if(pred->right==NULL){
+                 pred->right=curr->right;
+                 curr->right=curr->left;
+                 curr->left=NULL;
+            }
+            }
+            curr=curr->right;
+        }
+    }
+};
+Problem no 6-> Merge two binary max heaps
+  class Solution{
+    public:
+    void heapify(vector<int>& ans,int size,int i){
+    int largest=i;
+        int left=2*i+1;
+        int right=2*i+2;
+        if(left<size && ans[largest]<ans[left]){
+            largest=left;
+        }
+        if(right<size && ans[largest]<ans[right]){
+            largest=right;
+        }
+        if(largest!=i){
+            swap(ans[i],ans[largest]);
+            heapify(ans,size,largest);
+        }
+    }
+    vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
+        vector<int>ans;
+       
+        
+        for(auto i:a)
+        ans.push_back(i);
+        
+        for(auto i:b)
+        ans.push_back(i);
+        
+        
+        int size=ans.size();
+        for(int i=size/2-1;i>=0;i--){
+            heapify(ans,size,i);
+        }
+        return ans;
+    }
+};
+Problem no 7 ->minimum cost of ropes
+  class Solution{
+    public:
+    void heapify(vector<int>& ans,int size,int i){
+    int largest=i;
+        int left=2*i+1;
+        int right=2*i+2;
+        if(left<size && ans[largest]<ans[left]){
+            largest=left;
+        }
+        if(right<size && ans[largest]<ans[right]){
+            largest=right;
+        }
+        if(largest!=i){
+            swap(ans[i],ans[largest]);
+            heapify(ans,size,largest);
+        }
+    }
+    vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m) {
+        vector<int>ans;
+       
+        
+        for(auto i:a)
+        ans.push_back(i);
+        
+        for(auto i:b)
+        ans.push_back(i);
+        
+        
+        int size=ans.size();
+        for(int i=size/2-1;i>=0;i--){
+            heapify(ans,size,i);
+        }
+        return ans;
+    }
+};
