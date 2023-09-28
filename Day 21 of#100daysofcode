@@ -1,0 +1,110 @@
+Problem no 1-> LCA in  Tree 
+Problem No 2-> LCA in BST
+Problem No 3-> Recover Binary search tree
+Problem No 4-> Minimum Depth of tree
+
+1-> 
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL){
+            return NULL;
+        }
+        if(root==p || root==q){
+            return root;
+        }
+        TreeNode* leftAns=lowestCommonAncestor(root->left,p,q);
+        TreeNode* rightAns=lowestCommonAncestor(root->right,p,q);
+        if(leftAns!=NULL && rightAns!=NULL){
+            return root;
+        }
+      else  if(leftAns!=NULL && rightAns==NULL){
+            return leftAns;
+        }
+       else if(rightAns!=NULL && leftAns==NULL){
+            return rightAns;
+        }
+        else{
+            return NULL;
+        }
+    }
+};
+
+
+2-> 
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==NULL){
+            return NULL;
+        }
+        if(root->val > p->val && root->val >q->val){
+           return  lowestCommonAncestor(root->left,p,q);
+        }
+        if(root->val < p->val && root->val < q->val){
+        return  lowestCommonAncestor(root->right,p,q);
+        }
+            return root;
+    }
+};
+
+
+3-> 
+class Solution {
+public:
+void Inordertrav(TreeNode* temp,vector<int>& inorder){
+    
+    if(temp==NULL){
+        return ;
+    }
+    Inordertrav(temp->left,inorder);
+    inorder.push_back(temp->val);
+    Inordertrav(temp->right,inorder);
+
+}
+void Inorderswap(TreeNode* root,vector<int> & inorder,int& i){
+if(root==NULL){
+    return;
+}
+Inorderswap(root->left,inorder,i);
+if(root->val!=inorder[i]){
+    swap(root->val,inorder[i]);
+    i++;
+}
+else i++;
+Inorderswap(root->right,inorder,i);
+}
+    void recoverTree(TreeNode* root) {
+        vector<int> inorder;
+        TreeNode* temp=root;
+        Inordertrav(temp,inorder);
+        sort(inorder.begin(),inorder.end());
+        int i=0;
+        Inorderswap(root,inorder ,i);
+    }
+};
+
+
+4-> 
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if(root==NULL){
+            return 0;
+        }
+if(root->left==NULL and root->right==NULL ){
+    return 1;
+}
+if(root->left==NULL and root->right!=NULL){
+    return minDepth(root->right)+1;
+}
+if(root->right==NULL and root->left !=NULL){
+    return minDepth(root->left)+1;
+}
+if(root->right!=NULL and root->left!=NULL){
+    return 1+min(minDepth(root->right),minDepth(root->left));
+}
+return 0;
+    }
+};
+
