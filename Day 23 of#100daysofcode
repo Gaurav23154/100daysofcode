@@ -1,0 +1,58 @@
+Problem No 1-> Reorder List
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        int size=0;
+        ListNode* dummy=head;
+        stack<ListNode*> nodes;
+        while(dummy!=NULL){
+            nodes.push(dummy);
+            size++;
+            dummy=dummy->next;
+        }
+        dummy=head;
+        for(int i=0;i<size/2;i++){
+            ListNode* temp=dummy->next;
+            dummy->next=nodes.top();
+            nodes.pop();
+            dummy=dummy->next;
+            dummy->next=temp;
+            dummy=temp;
+        }
+        dummy->next=NULL;
+    }
+};
+Problem No 2-> House Robber III
+class Solution {
+public:
+    int rob(TreeNode* root) {
+        
+        bool oddOReven=true;
+        int sumO=0;
+        int sumE=0;
+        queue<TreeNode* > q;
+        q.push(root);
+        while(!q.empty()){
+            int size=q.size();
+            for(int i=0;i<size;i++){
+            TreeNode* Nodefront=q.front();
+            q.pop();
+            if(oddOReven){
+                sumE=sumE+Nodefront->val;
+            }
+            else{
+                sumO=sumO+Nodefront->val;
+            }
+
+            if(Nodefront->left){
+                q.push(Nodefront->left);
+            }
+            if(Nodefront->right){
+                q.push(Nodefront->right);
+            }
+            }
+          oddOReven=!oddOReven;
+        }
+        return max(sumE,sumO);
+    }
+};
