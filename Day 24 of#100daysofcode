@@ -1,0 +1,107 @@
+Problem no 1-> Maximum values of ordered triplets
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        int n = nums.size();
+        long long  mx = INT_MIN;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+            for(int k=j+1;k<n;k++){
+                int sum = (nums[i]-nums[j]);
+                if(sum > 0)
+                    mx = max(mx,(long long)(nums[i]-nums[j])*nums[k]);
+                }
+            }
+        }
+        return mx > 0 ? mx : 0;
+    }
+};
+Problem no 2-> Reverse Words in a string III
+#include <stack>
+#include <string>
+class Solution {
+public:
+    string reverseWords(string s) {
+    //     stack<char> st;
+    //     string sol="";
+    //     char ch;
+    //    for(char ch:s){
+    //         if(ch!=' '){
+    //           st.push(ch);
+    //         }
+    //        else{
+    //         while(!st.empty()){
+    //            sol+=st.top();
+    //             st.pop();
+    //         }
+    //         sol+=' ';
+    //         }  
+    //    }
+    // while(!st.empty()){
+    //     sol+=st.top();
+    //     st.pop();
+    // }
+    //    return sol;
+    //Approach 2
+    int start=0;
+    for(int end=0;end<s.length();end++){
+        if(s[end]==' '){
+            reverse(s.begin()+start,s.begin()+end);
+            start=end+1;
+        }
+    }
+    reverse(s.begin()+start,s.end());
+    return s;
+    }
+};
+Problem no 3-> Delete Node in BST
+TreeNode* minival(TreeNode* root){
+    TreeNode* temp=root;
+    while(temp->left!=NULL){
+        temp=temp->left;
+    }
+    return temp;
+ }
+
+    TreeNode* deleteNode(TreeNode* root, int key) {
+         if(root==NULL){
+        return root;
+    }
+    if(root->val==key){
+        //0 child
+        if(root->left==NULL and root->right==NULL){
+        delete(root);
+        return NULL;
+         }
+        //1 child 
+        //left child
+        if(root->left!=NULL and root->right==NULL){
+            TreeNode* temp=root->left;
+            delete root;
+            return temp;
+        }
+        // right child
+        if(root->right!=NULL and root ->left ==NULL){
+            TreeNode* temp=root->right;
+            delete root;
+            return temp;
+        }
+
+        //2 child
+        if(root->left!=NULL and root->right!=NULL){
+            int mini=minival(root->right)->val;
+            root->val=mini;
+            root->right=deleteNode(root->right,mini);
+            return root;
+        }
+
+    }
+    else if(root->val>key){
+      root->left=  deleteNode(root->left,key);
+    }
+    else{
+       root->right= deleteNode(root->right,key);
+    }
+    return root;
+    }
+};
