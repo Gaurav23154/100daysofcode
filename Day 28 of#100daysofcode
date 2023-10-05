@@ -1,0 +1,30 @@
+Problem no 1-> Majority element 2
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        unordered_map<int,int> mpp;
+        for(auto it:nums){
+         mpp[it]++;
+        }
+        vector<int>ans;
+        int n=nums.size()/3;
+        for(auto it:mpp){
+            if(it.second>n){
+                ans.push_back(it.first);
+            }
+        }
+        return ans;
+    }
+};
+Problem no 2-> Remove Linked list element 
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+       if(head==NULL){
+           return NULL;
+       } 
+       head->next=removeElements(head->next,val);
+       return head->val==val?head->next:head;
+    }
+};
+Problem no 3-> Power of (x,n);
