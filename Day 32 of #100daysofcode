@@ -1,0 +1,112 @@
+Trie implementation 
+#include<iostream>
+#include<string>
+using namespace std;
+class TrieNode{
+    public:
+    char data;
+    TrieNode*  children[26];
+    bool isterminal;
+
+    TrieNode(char val){
+    data=val;
+    for(int i=0;i<26;i++){
+        children[i]=NULL;
+    }  
+    isterminal=false;
+    }
+};
+class Trie{
+    public:
+    TrieNode* root;
+    Trie(){
+        root=new TrieNode('\0');
+    }
+    void InsertUtil(TrieNode* root,string word){
+        if(word.length()==0){
+            root->isterminal=true;
+            return ;
+        }
+        int index=word[0]-'A';
+        TrieNode* child;
+        if(root->children[index]!=NULL){
+            child=root->children[index];
+        }
+        else{
+            child=new TrieNode(word[0]);
+            root->children[index]=child;
+        }
+       return  InsertUtil(root,word.substr(1));
+    }
+    void insert(string word){
+        return InsertUtil(root,word);
+    }
+    bool searchUntil(TrieNode* root,string word){
+        if(word.length()==0){
+        return root->isterminal;
+        }
+        int index=word[0]-'A';
+        TrieNode* child;
+        if(root->children[index]!=NULL){
+            child=root->children[index];
+        }
+        else{
+            return false;
+        }
+        return searchUntil(root,word.substr(1));
+
+    }
+    bool search(string word){
+        return searchUntil(root,word);
+    }
+};
+int main()
+{
+Trie *t=new Trie();
+t->insert("ARM");
+t->insert("DUCK");
+t->insert("DU");
+t->insert("DUM");
+cout<<"Present Word ARM  "<<t->search("ARM")<<endl;
+cout<<"Present Word DUCK  "<<t->search("DUCK")<<endl;
+cout<<"Present Word DU  "<<t->search("DU")<<endl;
+cout<<"Present Word DUM  "<<t->search("DUM")<<endl;
+cout<<"Present Word GAUEAC  "<<t->search("GAUEAC")<<endl;
+return 0;
+}
+Problem no 1-> two sum 
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+       unordered_map<int,int>mpp;
+       for(int i=0;i<nums.size();i++){
+           int needed=target-nums[i];
+           if(mpp.find(needed)!=mpp.end()){
+               return {i,mpp[needed]};
+           }
+           else{
+             mpp[nums[i]]=i;  
+           } 
+       }
+       return {-1,-1};
+    }
+};
+Problem No 2-> find the first and last position of elment in sorted array
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+       vector<int>ans;
+       for(int i=0;i<nums.size();i++){
+           if(nums[i]==target){
+               ans.push_back(i);
+           }
+       }
+       if(ans.empty()){
+           return {-1,-1};
+       }
+       else{
+           return {ans[0],ans[ans.size()-1]};
+       }
+       return {0,0};
+    }
+};
