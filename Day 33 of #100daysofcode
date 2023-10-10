@@ -1,0 +1,112 @@
+Problem no 1->word break (could n't solve it ) 
+problem no 2->Implement trie
+
+class TrieNode{
+    public:
+     char data;
+    TrieNode* children[26];
+    bool isTerminal;
+    TrieNode(char ch){
+     data=ch;
+      for(int i=0;i<26;i++){
+            children[i]=NULL;
+      
+     }
+           isTerminal=false;
+    }
+};
+class Trie {
+    public:
+      TrieNode* root;
+
+    Trie() {
+     root=new TrieNode('\0') ; 
+    }
+    void InsertUtil(TrieNode* root,string word){
+        if(word.length()==0){
+            root->isTerminal=true;
+            return ;
+        }
+        int index=word[0]-'a';
+        TrieNode* child;
+        if(root->children[index]!=NULL){
+          child= root->children[index];
+        }
+        else{
+            child=new TrieNode(word[0]);
+            root->children[index]=child;
+        }
+         InsertUtil(child,word.substr(1));
+    }
+    void insert(string word) {
+        InsertUtil(root,word);
+    }
+    bool searchUtil(TrieNode* root,string word){
+          if(word.length()==0){
+              return root->isTerminal;
+          }
+          int index=word[0]-'a';
+          TrieNode* child;
+          if(root->children[index]!=NULL){
+              child=root->children[index];
+          }
+          else{
+              return false;
+          }
+          return searchUtil(child,word.substr(1));
+    }
+    bool search(string word) {
+        return searchUtil(root,word);
+    }
+     bool prefixUtil(TrieNode* root,string word){
+          if(word.length()==0){
+              return true;
+          }
+          int index=word[0]-'a';
+          TrieNode* child;
+          if(root->children[index]!=NULL){
+              child=root->children[index];
+          }
+          else{
+              return false;
+          }
+          return prefixUtil(child,word.substr(1));
+    }
+    bool startsWith(string prefix) {
+        return prefixUtil(root,prefix);
+    }
+};
+Problem no 3-> reverse only letteres
+#include <bits/stdc++.h> 
+bool chechchar(char ch){
+	if((ch<='z'&& ch>='a' )   ||( ch<='Z'&& ch>='A')){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+string reverseOnlyLetters(string & s) {
+  
+  int i=0;
+  int j=s.length()-1;
+  while(i<j){
+	 if(chechchar(s[i]) && chechchar(s[j])){
+		 swap(s[i],s[j]);
+		 i++;
+		 j--;
+	 }
+	 else if(chechchar(s[i])==true && chechchar(s[j])==false){
+     j--;
+	 }
+	 else if((chechchar(s[i])==false && chechchar(s[j])==true)){
+		 i++;
+	 }
+	 else{
+		 i++;
+		 j--;
+	 }
+  }
+  return s;
+}
