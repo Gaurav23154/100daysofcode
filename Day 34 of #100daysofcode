@@ -1,0 +1,77 @@
+Problem no 1->Lexicographically smallest palindrome
+class Solution {
+public:
+     char findsmallest(char a,char b){
+         if(a>b){
+             return b;
+         }
+         else{
+             return a;
+         }
+     }
+    string makeSmallestPalindrome(string s) {
+    int i=0,j=s.length()-1;
+      while(i<=j){
+          if(s[i]==s[j]){
+              i++;
+              j--;
+          }
+          else {
+              char ch=findsmallest(s[i],s[j]);
+              s[i]=ch ;
+              s[j]=ch;
+              i++;j--;
+          }
+      }
+      return s;
+
+    }
+};
+Problem no 2-> Lexicographical no
+class Solution {
+public:
+  void dfs(int i,int n,vector<int>& ans){
+      if(i>n){
+          return ;
+      }
+      ans.push_back(i);
+      for(int j=0;j<=9;j++){
+          dfs(i*10+j,n,ans);
+      }
+  }
+    vector<int> lexicalOrder(int n) {
+       vector<int> ans;
+       for(int i= 1;i<=9;i++){
+           dfs(i,n ,ans);
+       } 
+       return ans;
+    }
+};
+Problem no 3-> find the insert position 
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        
+        int ans=0;
+        int i=0;
+        int j=nums.size();
+        if(target >nums[j-1]){
+            return j;
+        }
+        
+        int mid=i+(j-i)/2;
+        while(i<=j){
+            if(nums[mid]==target ){
+                return mid;
+            }
+            else if(nums[mid]>target){
+                j=mid-1;
+            }
+            else{
+                i=mid+1;
+            }
+            mid=i+(j-i)/2;
+        }
+        return i;
+    }
+};
