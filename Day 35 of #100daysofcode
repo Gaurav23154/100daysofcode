@@ -1,0 +1,98 @@
+Problem no 1-> Phone directory using backtracking
+Problem no 2-> Two Sum II
+Problem no 3-> Plus one 
+Problem no 4-> sqrt(x)
+Problem no 5-> remove duplicates from sorted array
+
+solution 1->
+class TrieNode{
+    public:
+    char data;
+    TrieNode*  children[26];
+    bool isterminal;
+
+    TrieNode(char val){
+    data=val;
+    for(int i=0;i<26;i++){
+        children[i]=NULL;
+    }  
+    isterminal=false;
+    }
+};
+class Trie{
+    public:
+    TrieNode* root;
+    Trie(){
+        root=new TrieNode('\0');
+    }
+    void InsertUtil(TrieNode* root,string word){
+        if(word.length()==0){
+            root->isterminal=true;
+            return ;
+        }
+        int index=word[0]-'a';
+        TrieNode* child;
+        if(root->children[index]!=NULL){
+            child=root->children[index];
+        }
+        else{
+            child=new TrieNode(word[0]);
+            root->children[index]=child;
+        }
+       return  InsertUtil(child,word.substr(1));
+    }
+    void printSuggestions(TrieNode* curr,vector<string> & temp,string prefix){
+        if(curr->isterminal){
+            temp.push_back(prefix);
+        }
+        for(char character ='a';character<='z';character++){
+        TrieNode* next=curr->children[character-'a'];
+        if(next){
+            prefix.push_back(character);
+            printSuggestions(next,temp,prefix);
+            prefix.pop_back();
+        }
+        }
+    }
+    vector<vector<string >> getSuggestions(string str){
+        TrieNode* prev=root;
+        vector<vector<string> > ans;
+        string prefix="";
+        for(int i=0;i<str.length();i++){
+        char lastChar=str[i];
+        prefix.push_back(lastChar);
+        TrieNode* curr=prev->children[lastChar-'a'];
+        if(curr==NULL){
+            break;
+        }
+     
+            vector<string> temp;
+            printSuggestions(curr,temp,prefix);
+            ans.push_back(temp);
+            temp.clear();
+            prev=curr;
+        }
+        return ans;
+        }
+    
+    void insert(string word){
+        return InsertUtil(root,word);
+    }
+ 
+};
+
+
+
+vector<vector<string>> phoneDirectory(vector<string>&contactList, string &queryStr)
+{
+    Trie* t=new Trie();
+    int size=contactList.size();
+    for(int i=0;i<size;i++){
+        t->insert(contactList[i]);
+    }
+    return t->getSuggestions(queryStr);
+
+
+
+
+}
