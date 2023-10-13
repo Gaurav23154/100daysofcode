@@ -1,0 +1,59 @@
+Problem no 1-> Roman to integer
+class Solution {
+public:
+      int checkstring(char c){
+          int ans=0;
+          if(c=='I'){
+              ans= 1;
+          }
+          else if(c=='V'){
+              ans=  5;
+          }
+          else if(c=='X'){
+            ans=  10;
+          }
+          else if(c=='L'){
+               ans=  50;
+          }
+          else if(c=='C'){
+              ans=100;
+          }
+          else if(c=='D'){
+               ans=  500;
+          }
+          else if(c=='M'){
+             ans=  1000;
+          }
+          return ans;
+      }
+    int romanToInt(string s) {
+        int ans=0;
+        for(int i=0;i<s.size()-1;i++){
+              int a=checkstring(s[i]); int b=checkstring(s[i+1]);
+              if(a>=b){
+                  ans=ans+a;
+              }
+              else{
+                  ans=ans-a;
+              }
+        }
+        ans=ans+checkstring(s[s.size()-1]);
+        
+        return ans;
+    }
+};
+Problem no 2-> Pascal's triangle 
+class Solution {
+public:
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int> > result;
+        for(int i=0;i<numRows;i++){
+            vector<int > rows(i+1,1);
+            for(int j=1;j<i;j++){
+                rows[j]=result[i-1][j-1]+result[i-1][j];
+            }
+            result.push_back(rows);
+        }
+        return result;
+    }
+};
