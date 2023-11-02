@@ -1,0 +1,49 @@
+ problem -> find the k or of array 
+class Solution {
+public:
+    int findKOr(vector<int>& nums, int k) {
+        
+        int n=nums.size();
+        int result=0;
+        for(int i=0;i<31;i++){
+            int count=0;
+            for(int j=0;j<n;j++){
+                if((nums[j]>>i) & 1){
+                    count++;
+                }
+            }
+            if(count>=k){
+                result=result+(1<<i);
+            }
+        }
+        return result;
+    }
+};
+Problem No -> find Modes in binary search tree
+class Solution {
+public:
+void findModerev(TreeNode* root,unordered_map<int,int>& counts, vector<int>& ans,int& maxcount){
+           if(root==NULL){
+            return ;
+               }
+        
+       findModerev(root->left, counts,ans,maxcount);
+       int count=++counts[root->val];
+       if(count>maxcount){
+           maxcount=count;
+           ans.clear();
+           ans.push_back(root->val);
+       }
+       else if(count==maxcount){
+           ans.push_back(root->val);
+       }
+       findModerev(root->right,counts,ans,maxcount);
+}
+    vector<int> findMode(TreeNode* root) {
+        unordered_map<int,int> counts;
+        vector<int> ans;
+        int maxcount=0;
+        findModerev(root,counts,ans,maxcount);
+        return ans;
+    }
+};
