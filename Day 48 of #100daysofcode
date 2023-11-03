@@ -1,0 +1,54 @@
+Problem ->build an array with stack operation 
+class Solution {
+public:
+    vector<string> buildArray(vector<int>& target, int n) {
+        vector<string> result;      
+        int x=1;
+        int k=target.size();
+        for(int i=0;i<k;i++){         
+         while(x<target[i]){
+             result.push_back("Push");
+             result.push_back("Pop");
+             x++;
+         }
+         result.push_back("Push"); 
+         x++;
+        }
+        return result;
+    }
+};
+Problem ->minimum equal sum of two arrays after replacing zeroes
+class Solution {
+public:
+    long long minSum(vector<int>& nums1, vector<int>& nums2) {
+        int n1=nums1.size();
+        int n2=nums2.size();
+        long long  s1=0,s2=0,c1=0,c2=0;
+        for(auto i:nums1){
+            if(i==0){
+                c1++;
+            }
+            s1=s1+i;
+        }
+        for(auto i:nums2){
+            if(i==0){
+                c2++;
+            }
+            s2=s2+i;
+        }
+         s1=s1+c1;
+         s2=s2+c2;
+        if(s2>s1){
+            swap(s1,s2);
+            swap(c1,c2);
+        }
+                         
+        if(s1!=s2 and c1==0 and c2==0){
+            return -1;
+        }
+        if(s1!=s2 and c2==0){
+            return -1;
+        }
+         return s1;
+    }
+};
